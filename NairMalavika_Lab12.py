@@ -120,3 +120,6 @@ plt.title("FFT Power Spectrum of Residuals")
 plt.legend()
 plt.grid()
 plt.show()
+
+print(f"Trial-and-Error Period: {T_trial:.2f}, FFT-Derived Period: {dominant_period:.2f}. "
+      f"\nTherefore the period I obtained does agree my trial and error with a difference of {abs(T_trial - dominant_period):.2f}. ")
