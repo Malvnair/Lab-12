@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
+from scipy.fft import fft, fftfreq
 
 
 
@@ -19,14 +21,19 @@ plt.grid()
 plt.show()
 
 
-years = filtered_data['year']
+
+
+
+
+
+
+years = filtered_data.index
 co2_levels = filtered_data['average']
 poly_order = 2  
 
-normalized_years = years - years.min()
-poly_coeffs = np.polynomial.polynomial.polyfit(normalized_years, co2_levels, deg=poly_order)
+poly_coeffs = np.polynomial.polynomial.polyfit(years, co2_levels, deg=poly_order)
 
-trend = np.polynomial.polynomial.polyval(normalized_years, poly_coeffs)
+trend = np.polynomial.polynomial.polyval(years, poly_coeffs)
 
 residuals = co2_levels - trend
 
