@@ -91,3 +91,38 @@ plt.show()
 print("The attempt to fit a sinusoidal function to the residuals suggests that the polynomial fit may not fully capture the periodic variations in the data. It might be worthwhile to revisit the polynomial fit or explore a combined approach that accounts for both long-term trends and periodic oscillations.")
 
 
+
+
+residuals_array = residuals.to_numpy()  
+N = len(residuals_array)  
+d = 1  #
+
+# Compute the FFT
+fft_values = fft(residuals_array)  
+frequencies = fftfreq(N, d=d) 
+# Only  positive 
+positive_freqs = frequencies[:N // 2]  
+fft_magnitudes = np.abs(fft_values[:N // 2])  
+
+power_spectrum = fft_magnitudes**2
+
+dominant_freq_index = np.argmax(power_spectrum[1:]) + 1  # Skip zero frequency
+dominant_frequency = positive_freqs[dominant_freq_index]
+dominant_period = 1 / dominant_frequency  
+
+# Print 
+print(f"Dominant Frequency: {dominant_frequency:.2f} (1/Index)")
+
+# Plot 
+plt.figure(figsize=(10, 6))
+plt.plot(positive_freqs, power_spectrum, label="Power Spectrum")
+plt.axvline(x=dominant_frequency, color='red', linestyle='--', label=f"Dominant Frequency = {dominant_frequency:.4f}")
+plt.xlabel("Frequency (1/Index)")
+plt.ylabel("Power")
+plt.title("FFT Power Spectrum of Residuals")
+plt.legend()
+plt.grid()
+plt.show()
+
+print(f"Trial-and-Error Period: {T_trial:.2f}, FFT-Derived Period: {dominant_period:.2f}. "
+      f"\nTherefore the period I obtained does agree my trial and error with a difference of {abs(T_trial - dominant_period):.2f}. ")
