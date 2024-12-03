@@ -58,3 +58,30 @@ axs[1].grid()
 plt.tight_layout()
 plt.savefig("NairMalavika_Lab12_Fig1.png")
 plt.show()
+
+
+
+
+
+
+def sinusoidal_function(t, A, T, phi):
+    
+    return A * np.sin(2 * np.pi * t / T + phi)
+
+# parameters 
+A_trial = 2.0 
+T_trial = 45  
+phi_trial = 0
+
+sinusoidal_fit = sinusoidal_function(years, A_trial, T_trial, phi_trial)
+
+# Plot 
+plt.figure(figsize=(12, 6))
+plt.scatter(years, residuals, marker='+', color='blue', label='Residuals')
+plt.plot(years, sinusoidal_fit, color='red', linestyle='--', label='Sinusoidal Fit')
+plt.xlabel('Index')
+plt.ylabel('Residuals (ppm)')
+plt.title('Residuals with Sinusoidal Fit')
+plt.legend()
+plt.grid()
+plt.show()
