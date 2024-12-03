@@ -40,12 +40,12 @@ axs[0].grid()
 
 # Bottom panel: Residuals
 axs[1].scatter(x, residuals, label='Residuals', marker='o', color='green')
-axs[1].hlines(0, xmin=x.min(), xmax=x.max(), color='black', linestyles='dashed', linewidth=1)
 axs[1].set_xlabel('Year')
 axs[1].set_ylabel('Residuals (ppm)')
 axs[1].set_title('Analysis of CO2 Measurements: Residuals (1981–1990)')
 axs[1].legend()
 axs[1].grid()
 
+plt.savefig("NairMalavika_Lab12_Fig1.png")
 plt.tight_layout()
 plt.show()
