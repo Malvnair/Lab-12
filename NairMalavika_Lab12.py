@@ -69,9 +69,10 @@ def sinusoidal_function(t, A, T, phi):
     return A * np.sin(2 * np.pi * t / T + phi)
 
 # parameters 
-A_trial = 2.0 
-T_trial = 45  
-phi_trial = 0
+A_trial = 3.5
+T_trial = 12.05  
+phi_trial = 8 
+
 
 sinusoidal_fit = sinusoidal_function(years, A_trial, T_trial, phi_trial)
 
@@ -85,3 +86,8 @@ plt.title('Residuals with Sinusoidal Fit')
 plt.legend()
 plt.grid()
 plt.show()
+
+
+print("The attempt to fit a sinusoidal function to the residuals suggests that the polynomial fit may not fully capture the periodic variations in the data. It might be worthwhile to revisit the polynomial fit or explore a combined approach that accounts for both long-term trends and periodic oscillations.")
+
+
