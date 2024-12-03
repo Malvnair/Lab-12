@@ -2,13 +2,12 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+df = pd.read_csv("co2_mm_mlo.csv", skiprows=52, usecols=[0, 3], delimiter=",")
+df.columns = ['year', 'average']  
 
-df = pd.read_csv("co2_mm_mlo.csv", skiprows=51, delimiter= ",")
-filtered_data = df[(df.index >= 1981) & (df.index <= 1990)].reset_index()
+filtered_data = df[(df['year'] >= 1981) & (df['year'] <= 1990)]
 
-# Plot using 'year' and 'average'
-import matplotlib.pyplot as plt
-
+# Plot
 plt.figure(figsize=(10, 6))
 plt.plot(filtered_data['year'], filtered_data['average'], label='CO2 Levels (1981-1990)')
 plt.xlabel('Year')
