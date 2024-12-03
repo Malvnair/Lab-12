@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+
 df = pd.read_csv("co2_mm_mlo.csv", skiprows=52, usecols=[0, 3], delimiter=",")
 df.columns = ['year', 'average']  
 
@@ -18,34 +19,35 @@ plt.grid()
 plt.show()
 
 
-x = filtered_data['year'].to_numpy()
-y = filtered_data['average'].to_numpy()
+years = filtered_data['year']
+co2_levels = filtered_data['average']
+poly_order = 2  
 
-# Fit a low-order polynomial
-degree = 2
-coefficients = np.polynomial.polynomial.polyfit(x, y, deg=degree)
-trend = np.polynomial.polynomial.polyval(x, coefficients)
-residuals = y - trend
+normalized_years = years - years.min()
+poly_coeffs = np.polynomial.polynomial.polyfit(normalized_years, co2_levels, deg=poly_order)
 
-# Plot 
+trend = np.polynomial.polynomial.polyval(normalized_years, poly_coeffs)
+
+residuals = co2_levels - trend
+
+# Plot the results
 fig, axs = plt.subplots(2, 1, figsize=(12, 8), sharex=True)
 
-# Top panel: Original data and fitted trend
-axs[0].scatter(x, y, marker='+', color='blue')
-axs[0].plot(x, trend, label=f'Fitted Polynomial Trend (degree {degree})', color='red', linewidth=2)
+# Top panel: Original data with trend
+axs[0].scatter(years, co2_levels, marker='+', label='Original Data')
+axs[0].plot(years, trend, color='red', label=f'Order {poly_order} Polynomial Fit')
 axs[0].set_ylabel('CO2 Levels (ppm)')
-axs[0].set_title('Analysis of CO2 Measurements: Long-Term Trend (1981–1990)')
+axs[0].set_title('Analysis of CO2 Measurements: General Trend')
 axs[0].legend()
 axs[0].grid()
 
 # Bottom panel: Residuals
-axs[1].scatter(x, residuals, label='Residuals', marker='o', color='green')
+axs[1].scatter(years, residuals, marker='+', color='blue')
 axs[1].set_xlabel('Year')
 axs[1].set_ylabel('Residuals (ppm)')
-axs[1].set_title('Analysis of CO2 Measurements: Residuals (1981–1990)')
-axs[1].legend()
+axs[1].set_title('Analysis of CO2 Measurements: Residuals')
 axs[1].grid()
 
-plt.savefig("NairMalavika_Lab12_Fig1.png")
 plt.tight_layout()
+plt.savefig("NairMalavika_Lab12_Fig1.png")
 plt.show()
