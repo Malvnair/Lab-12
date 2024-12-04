@@ -93,7 +93,7 @@ def sinusoidal_function(t, A, T, phi):
 
 # Trial-and-Error parameters for sinusoidal fit
 A_trial = 3.5
-T_trial = 12.05  
+T_trial = 12.05  # multplied by 12 because of month calculations
 phi_trial = 5.3
 
 # Call functio to create sinusoidal fit using parameters
@@ -126,7 +126,7 @@ fft_values = fft(residuals_array)
 frequencies = fftfreq(N, d=d) 
 
 # Take only positive frequencies
-positive_freqs = frequencies[:N // 2]  
+positive_freqs = frequencies[:N // 2] * 10   
 fft_magnitudes = np.abs(fft_values[:N // 2])  
 power_spectrum = fft_magnitudes**2
 
@@ -147,8 +147,8 @@ plt.grid()
 plt.show()
 
 # Print statement to compare periods fromt trial and error with FFT
-print(f"\n\nTrial-and-Error Period: {T_trial:.2f}, FFT-Derived Period: {dominant_period:.2f}. "
-      f"\nTherefore the period I obtained does agree with my trial and error with a difference of {abs(T_trial - dominant_period):.2f}. ")
+print(f"\n\nTrial-and-Error Period: {T_trial/12:.2f}, FFT-Derived Period: {dominant_period:.2f}. " #divide by 12 to put in terms of years
+      f"\nTherefore the period I obtained does agree with my trial and error with a difference of {abs(T_trial/12 - dominant_period):.2f}. ")
 
 
 
