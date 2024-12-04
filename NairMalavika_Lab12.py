@@ -119,14 +119,14 @@ print("TThe sinusoidal fit to the residuals indicates that the polynomial trend 
 # Convert residuals to numpy array for FFT analysis
 residuals_array = residuals.to_numpy()  
 N = len(residuals_array)  
-d = 1  
+d = 0.1  
 
 # Compute the FFT
 fft_values = fft(residuals_array)  
 frequencies = fftfreq(N, d=d) 
 
 # Take only positive frequencies
-positive_freqs = frequencies[:N // 2] * 10   
+positive_freqs = frequencies[:N // 2]   
 fft_magnitudes = np.abs(fft_values[:N // 2])  
 power_spectrum = fft_magnitudes**2
 
