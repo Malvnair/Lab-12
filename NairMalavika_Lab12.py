@@ -120,6 +120,7 @@ print("TThe sinusoidal fit to the residuals indicates that the polynomial trend 
 residuals_array = residuals.to_numpy()  
 N = len(residuals_array)  
 d = 0.1  
+print(N)
 
 # Compute the FFT
 fft_values = fft(residuals_array)  
@@ -128,7 +129,7 @@ frequencies = fftfreq(N, d=d)
 # Take only positive frequencies
 positive_freqs = frequencies[:N // 2]   
 fft_magnitudes = np.abs(fft_values[:N // 2])  
-power_spectrum = fft_magnitudes**2
+power_spectrum = fft_magnitudes
 
 # Identify the dominant frequency
 dominant_freq_index = np.argmax(power_spectrum[1:]) + 1  
@@ -138,8 +139,7 @@ dominant_period = 1 / dominant_frequency
 # Plot power spectrum
 plt.figure(figsize=(10, 6))
 plt.plot(positive_freqs, power_spectrum, label="Power Spectrum")
-plt.axvline(x=dominant_frequency, color='red', linestyle='--', label=f"Dominant Frequency = {dominant_frequency:.4f}")
-plt.xlabel("Frequency")
+plt.xlabel("Frequency (1/Year)")
 plt.ylabel("Power")
 plt.title("FFT Power Spectrum of Residuals")
 plt.legend()
