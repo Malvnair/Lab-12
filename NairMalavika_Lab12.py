@@ -18,7 +18,7 @@ filtered_data['time'] = (filtered_data['year'] - 1981) * 12 + filtered_data['mon
 # Plot the CO2 data
 plt.figure(figsize=(10, 6))
 plt.scatter(filtered_data['time'], filtered_data['average'], marker='+')
-plt.xlabel('Year)')
+plt.xlabel('Year')
 plt.ylabel('CO2 (ppm)')
 plt.title('CO2 Measurements from 1981 to 1990')
 plt.xticks(
@@ -216,23 +216,26 @@ poly_coeffs = np.polynomial.polynomial.polyfit(all_time, df['average'], deg=poly
 # Call function to get combined model fit for all data
 model_fit = combined_model(all_time, A_combined, T_combined, phi_combined, poly_coeffs)
 
+# Adjust the all_time variable to years
+years = 1958 + all_time / 12
+
 # Predict the year CO2 reached 400 ppm using the model
-model_400_index = np.where(model_fit >= 400)[0][0]  
-predicted_time_400 = all_time[model_400_index]  
-predicted_year_400 = 1958 + predicted_time_400 / 12  
+model_400_index = np.where(model_fit >= 400)[0][0]
+predicted_time_400 = years[model_400_index]
+predicted_year_400 = predicted_time_400
 
 # Find the actual year CO2 reached 400 ppm from the data
-actual_400_index = np.where(df['average'] >= 400)[0][0]  
-actual_time_400 = all_time[actual_400_index] 
-actual_year_400 = 1958 + actual_time_400 / 12 
+actual_400_index = np.where(df['average'] >= 400)[0][0]
+actual_time_400 = years[actual_400_index]
+actual_year_400 = actual_time_400
 
-# Plot the full dataset, model, and 400 ppm threshold
+# Plot the full dataset, model, and 400 ppm threshold with years on x-axis
 plt.figure(figsize=(12, 6))
-plt.scatter(all_time, df['average'], color='blue', marker='+', label='Actual Data (1958-2020)')
-plt.plot(all_time, model_fit, color='red', linestyle='--', label='Combined Model')
+plt.scatter(years, df['average'], color='blue', marker='+', label='Actual Data (1958-2020)')
+plt.plot(years, model_fit, color='red', linestyle='--', label='Combined Model')
 plt.axhline(y=400, color='purple', linestyle='--', label='400 ppm Threshold')
-plt.axvline(x=predicted_time_400, color='green', linestyle='--', label=f'Predicted: {predicted_year_400:.2f}')
-plt.axvline(x=actual_time_400, color='green', linestyle='--', label=f'Actual: {actual_year_400:.2f}')
+plt.axvline(x=predicted_year_400, color='green', linestyle='--', label=f'Predicted: {predicted_year_400:.2f}')
+plt.axvline(x=actual_year_400, color='green', linestyle='--', label=f'Actual: {actual_year_400:.2f}')
 plt.xlabel('Year')
 plt.ylabel('CO2 (ppm)')
 plt.title('CO2 Measurements, Combined Model, and 400 ppm Prediction')
@@ -259,3 +262,4 @@ mape = np.mean(np.abs((actual_co2_outside - predicted_co2_outside) / actual_co2_
 
 # Print the results
 print(f"\nThe model predicts CO2 variations with a MAPE of {mape:.2f}%, showing a high level of accuracy and only minor deviations from the actual data.")
+
